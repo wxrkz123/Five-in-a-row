@@ -1,30 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="网页版五子棋：人机对战（三档难度）与双人对战，支持悔棋、手数显示，手机电脑都能玩。" />
+    <meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)" />
+    <title>五子棋 · Five in a Row</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e2b778'/><circle cx='12' cy='13' r='7' fill='%23161514'/><circle cx='20' cy='19' r='7' fill='%23faf8f4' stroke='%23a59c8e' stroke-width='.6'/></svg>"
+    />
+    <link rel="stylesheet" href="./dist/gomoku.css" />
+  </head>
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-		<link rel="stylesheet" href="./css/index.css">
-	</head>
+  <body>
+    <main class="app">
+      <header class="brand">
+        <h1>五子棋</h1>
+        <span class="brand-sub">Five in a Row</span>
+      </header>
 
-	<body>
-		<div class="checkerboard">
-			<div class="checkerContent"></div>
-			<canvas></canvas>
-		</div>
-	</body>
+      <section class="board-area" aria-label="棋盘">
+        <div class="board-frame">
+          <canvas id="board" tabindex="0" aria-label="15×15 棋盘。可用方向键移动光标，回车或空格落子。"></canvas>
 
+          <div id="result" class="result" hidden>
+            <div class="result-card" role="dialog" aria-modal="false" aria-labelledby="result-title">
+              <h2 id="result-title"></h2>
+              <p id="result-sub"></p>
+              <div class="result-actions">
+                <button id="result-close" class="btn" type="button">查看棋局</button>
+                <button id="result-again" class="btn primary" type="button">再来一局</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="status">
+          <span id="status-stone" class="stone black" aria-hidden="true"></span>
+          <div class="status-body">
+            <strong id="status-text">轮到你了</strong>
+            <small id="status-sub">第 1 手</small>
+          </div>
+        </div>
+
+        <div class="settings">
+          <div class="field">
+            <span class="field-label" id="label-mode">模式</span>
+            <div class="segmented" data-setting="mode" role="group" aria-labelledby="label-mode">
+              <button type="button" data-value="pve">人机对战</button>
+              <button type="button" data-value="pvp">双人对战</button>
+            </div>
+          </div>
+
+          <div class="field pve-only">
+            <span class="field-label" id="label-side">执子</span>
+            <div class="segmented" data-setting="side" role="group" aria-labelledby="label-side">
+              <button type="button" data-value="black">执黑 · 先手</button>
+              <button type="button" data-value="white">执白 · 后手</button>
+            </div>
+          </div>
+
+          <div class="field pve-only">
+            <span class="field-label" id="label-level">难度</span>
+            <div class="segmented" data-setting="level" role="group" aria-labelledby="label-level">
+              <button type="button" data-value="easy">简单</button>
+              <button type="button" data-value="normal">普通</button>
+              <button type="button" data-value="hard">困难</button>
+            </div>
+          </div>
+
+          <label class="switch">
+            <input id="show-numbers" type="checkbox" />
+            <span class="switch-track" aria-hidden="true"></span>
+            <span>显示手数</span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="undo" class="btn" type="button" title="悔棋（Ctrl + Z）">悔棋</button>
+          <button id="restart" class="btn primary" type="button">重新开始</button>
+        </div>
+
+        <p class="hint">
+          黑方先行，横、竖、斜任一方向先连成五子者获胜（无禁手，长连也算胜）。
+          <span class="kbd-hint"><br /><kbd>Ctrl</kbd> + <kbd>Z</kbd> 悔棋；棋盘获得焦点后可用方向键与回车落子。</span>
+        </p>
+      </aside>
+    </main>
+
+    <div id="announcer" class="sr-only" aria-live="polite"></div>
+
+    <noscript><p class="noscript">请启用 JavaScript 后再开始对局。</p></noscript>
+    <script src="./dist/gomoku.js"></script>
+  </body>
 </html>
-
-<script src="./js/init.js"></script>
-<script src="./js/lattice.js"></script>
-
-<script>
-	// 初始化 棋盘背景
-	const init = new Init()
-
-	// 添加棋盘格子
-	const lattice = new Lattice()
-</script>
