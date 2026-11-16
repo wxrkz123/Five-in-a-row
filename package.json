@@ -1,0 +1,32 @@
+{
+  "name": "five-in-a-row",
+  "version": "2.0.0",
+  "private": true,
+  "description": "网页版五子棋：双人对战 / 人机对战，TypeScript + Canvas，零运行时依赖",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "esbuild src/main.ts --bundle --format=iife --target=es2018 --outfile=dist/gomoku.js",
+    "build:css": "sass src/styles/index.scss dist/gomoku.css --no-source-map",
+    "watch:js": "npm run build:js -- --watch",
+    "watch:css": "npm run build:css -- --watch",
+    "typecheck": "tsc",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wxrkz123/Five-in-a-row.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wxrkz123/Five-in-a-row/issues"
+  },
+  "homepage": "https://github.com/wxrkz123/Five-in-a-row#readme",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "sass": "^1.108.2",
+    "typescript": "^7.0.2"
+  }
+}
